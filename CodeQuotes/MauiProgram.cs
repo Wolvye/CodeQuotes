@@ -13,6 +13,7 @@ namespace CodeQuotes
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Delius-Regular.ttf", "DeliusRegular");
                 });
 
 #if DEBUG
