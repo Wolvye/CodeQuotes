@@ -1,16 +1,41 @@
 ﻿using MaterialColorUtilities;
+using System.Threading.Tasks;
 
 namespace CodeQuotes
 {
+
     public partial class MainPage : ContentPage
     {
+
+
+        List<string> quotes =
+            new List<string>();
+
+
         private readonly Random random = new();
 
         public MainPage()
         {
             InitializeComponent();
+            LoadMauiAsset();
         }
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadMauiAsset();
+
+        }
+        async Task LoadMauiAsset()
+        {
+            using var stream = await FileSystem.OpenAppPackageFileAsync("quotes.txt");
+            using var reader = new StreamReader(stream);
+
+            while (reader.Peek() != -1)
+            {
+                quotes.Add(reader.ReadLine());
+            }
+        }
         private void OnCounterClicked(object? sender, EventArgs e)
         {
         }
@@ -47,6 +72,10 @@ namespace CodeQuotes
                 new Point(1, 1));
 
             background.Background = gradient;
+
+            int index = random.Next(quotes.Count);
+            quote.Text = quotes[index];
+            Console.WriteLine($"Neues Zitat: {quotes[index]}");
         }
     }
 }
